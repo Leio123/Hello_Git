@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import math
+
 INF = float("inf")
 
 
@@ -23,7 +24,7 @@ class State(object):
                          math.pow((self.y - state.y), 2))
 
     def set_state(self, state):
-        if state not in ["S", ".", "#", "E", "*","+"]:
+        if state not in ["S", ".", "#", "E", "*", "+"]:
             return
         self.state = state
 
@@ -87,10 +88,10 @@ class Dstar(object):
         D*算法的主要过程
         :return:
         '''
-        x = self.min_state()    # 获取open list列表中最小k的节点
+        x = self.min_state()  # 获取open list列表中最小k的节点
         if x is None:
             return -1
-        k_old = self.get_kmin() #获取open list列表中最小k节点的k值
+        k_old = self.get_kmin()  # 获取open list列表中最小k节点的k值
         self.remove(x)  # 从openlist中移除
         # 判断openlist中
         if k_old < x.h:
@@ -98,7 +99,7 @@ class Dstar(object):
                 if y.h <= k_old and x.h > y.h + x.cost(y):
                     x.parent = y
                     x.h = y.h + x.cost(y)
-        elif k_old == x.h:
+        if k_old == x.h:
             for y in self.map.get_neighbers(x):
                 if y.t == "new" or y.parent == x and y.h != x.h + x.cost(y) \
                         or y.parent != x and y.h > x.h + x.cost(y):
